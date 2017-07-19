@@ -13,11 +13,15 @@ namespace
 }
 
 
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
+MainWindow::MainWindow() :
+    QMainWindow(0),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->tableView->setModel(&model);
+
+    model.initialize();
+
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(fileOpen()));
     emit ui->actionOpen->triggered();
 }
