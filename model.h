@@ -13,6 +13,7 @@ public slots:
 signals:
 protected:
 private:
+    void Model::readDxccTextFile();
 };
 
 #endif

@@ -23,7 +23,7 @@ MainWindow::MainWindow() :
     model.initialize();
 
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(fileOpen()));
-    emit ui->actionOpen->triggered();
+//    emit ui->actionOpen->triggered();
 }
 
 MainWindow::~MainWindow()

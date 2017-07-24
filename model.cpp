@@ -1,7 +1,26 @@
 #include "model.h"
 
+void Model::readDxccTextFile()
+{
+    QFile inputFile("dxcc.txt");
+    if (inputFile.open(QIODevice::ReadOnly))
+    {
+       QTextStream in(&inputFile);
+       while (!in.atEnd())
+       {
+           // skip header lines
+           in.readLine();
+           in.readLine();
+           in.readLine();
+           QString line = in.readLine();
+       }
+       inputFile.close();
+    }
+}
+
 void Model::initialize()
 {
+    readDxccTextFile();
     QSqlQuery query;
     query.exec("create table if not exists dxcc ("
                "id int primary key,"
