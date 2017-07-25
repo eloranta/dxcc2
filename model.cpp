@@ -2,17 +2,30 @@
 
 void Model::readDxccTextFile()
 {
+    QSqlQuery query;
+    query.exec("create table if not exists entity ("
+               "id int primary key,"
+               "prefix varchar(20),"
+               "entity varchar(20)"
+               ")");
+
     QFile inputFile("dxcc.txt");
+    QTextStream input(&inputFile);
     if (inputFile.open(QIODevice::ReadOnly))
     {
-       QTextStream in(&inputFile);
-       while (!in.atEnd())
+        // skip header lines
+       input.readLine();
+       input.readLine();
+       input.readLine();
+
+       while (!input.atEnd())
        {
-           // skip header lines
-           in.readLine();
-           in.readLine();
-           in.readLine();
-           QString line = in.readLine();
+           QString line = input.readLine();
+           QString prefix = line.mid(0, 24).trimmed();
+           QString entity = line.mid(24, 35).trimmed();
+           int id = line.mid(77, 3).toInt();
+           query.exec(QString("insert into entity (id, prefix, entity)"
+                "values(%1, '%2', '%3')").arg(id).arg(prefix.toStdString().c_str()).arg(entity.toStdString().c_str()));
        }
        inputFile.close();
     }
@@ -48,7 +61,4 @@ void Model::initialize()
     setTable("dxcc");
     select();
     setEditStrategy(QSqlTableModel::OnFieldChange);
-
-    query.exec(QString("insert into dxcc (id, prefix, entity, deleted, mixed, phone, cw, data, sat, m160, m80, m40, m30, m20, m17, m15, m12, m10, m6, m2)"
-                           "values(1, '', 'SPRATLY ISLANDS', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)"));
 }
