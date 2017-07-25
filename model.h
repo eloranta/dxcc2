@@ -9,6 +9,7 @@ class Model : public QSqlRelationalTableModel
 public:
     Model() : QSqlRelationalTableModel() {}
     void initialize();
+    void fileOpen();
 public slots:
 signals:
 protected:

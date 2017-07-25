@@ -22,4 +22,4 @@ public slots:
     void fileOpen();
 };
 
-#endif // MAINWINDOW_H
+#endif
