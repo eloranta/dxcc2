@@ -62,7 +62,15 @@ void Model::initialize()
     setRelation(1, QSqlRelation("entity", "id", "prefix"));
     setRelation(2, QSqlRelation("entity", "id", "entity"));
     setEditStrategy(QSqlTableModel::OnFieldChange);
-    query.exec(QString("insert into dxcc (id, prefix, entity)"
-                       "values(1, 1, 1)"));
+
+    query.exec("select id from entity");
+    int id = 1;
+    while (query.next())
+    {
+        int entity_id = query.value(0).toInt();
+        QSqlQuery query2;
+        query2.exec(QString("insert into dxcc (id, prefix, entity) values(%1, %2, %3)").arg(id++).arg(entity_id).arg(entity_id));
+    }
+
     select();
 }
