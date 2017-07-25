@@ -59,6 +59,10 @@ void Model::initialize()
                ")");
 
     setTable("dxcc");
-    select();
+    setRelation(1, QSqlRelation("entity", "id", "prefix"));
+    setRelation(2, QSqlRelation("entity", "id", "entity"));
     setEditStrategy(QSqlTableModel::OnFieldChange);
+    query.exec(QString("insert into dxcc (id, prefix, entity)"
+                       "values(1, 1, 1)"));
+    select();
 }
