@@ -2,6 +2,7 @@
 #include <QFileDialog>
 #include <QDebug>
 #include <fstream>
+#include "SocketTest.h"
 
 namespace
 {
@@ -9,6 +10,11 @@ namespace
     {
         return line.substr(line.find('>') + 1);
     }
+}
+
+Model::Model() : socket(new SocketTest), QSqlRelationalTableModel()
+{
+
 }
 
 void Model::readDxccTextFile()
@@ -86,6 +92,8 @@ void Model::initialize()
     }
 
     select();
+
+    socket->Test();
 }
 
 void Model::fileOpen()

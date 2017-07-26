@@ -2,19 +2,21 @@
 #define MODEL_H
 
 #include <QtSql>
+class SocketTest;
 
 class Model : public QSqlRelationalTableModel
 {
     Q_OBJECT
 public:
-    Model() : QSqlRelationalTableModel() {}
+    Model();
     void initialize();
     void fileOpen();
 public slots:
 signals:
 protected:
 private:
-    void Model::readDxccTextFile();
+    void readDxccTextFile();
+    SocketTest *socket;
 };
 
 #endif
