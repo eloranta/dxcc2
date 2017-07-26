@@ -92,7 +92,7 @@ void SocketTest::readyRead()
     BandMode bandMode = Band(freq);
     QString spotterCountry = Country(spotter);
 
-    qDebug() << country << bandMode.band << call << bandMode.mode;
+    // qDebug() << country << bandMode.band << call << bandMode.mode;
 
     QSqlQuery query;
     query.exec(QString("select id from entity where entity='%1'").arg(country));
@@ -109,6 +109,50 @@ void SocketTest::readyRead()
     if (query.value(0).toInt() == 0)
     {
         qDebug() << "NEW DXCC: "<< country << bandMode.band << call << bandMode.mode;
+        return;
+    }
+
+    if (bandMode.mode == "phone")
+    {
+        query.exec(QString("select phone from dxcc where entity=%1").arg(id));
+        if (!query.next())
+            return;
+        if (query.value(0).toInt() == 0)
+        {
+            qDebug() << "NEW MODE: "<< country << bandMode.band << call << bandMode.mode;
+            return;
+        }
+    }
+    else if (bandMode.mode == "cw")
+    {
+        query.exec(QString("select cw from dxcc where entity=%1").arg(id));
+        if (!query.next())
+            return;
+        if (query.value(0).toInt() == 0)
+        {
+            qDebug() << "NEW MODE: "<< country << bandMode.band << call << bandMode.mode;
+            return;
+        }
+    }
+    else
+    {
+        query.exec(QString("select data from dxcc where entity=%1").arg(id));
+        if (!query.next())
+            return;
+        if (query.value(0).toInt() == 0)
+        {
+            qDebug() << "NEW MODE: "<< country << bandMode.band << call << bandMode.mode;
+            return;
+        }
+    }
+
+    query.exec(QString("select '%1' from dxcc where entity=%2").arg(bandMode.band).arg(id));
+    if (!query.next())
+        return;
+    if (query.value(0).toInt() == 0)
+    {
+        qDebug() << "NEW BAND: "<< country << bandMode.band << call << bandMode.mode;
+        return;
     }
 }
 
@@ -495,32 +539,32 @@ BandMode SocketTest::Band(const QString& freq)
   if (f >= 3500 && f < 3570)
   {
     mode = "cw";
-    band = "80m";
+    band = "m80";
   }
   else if (f >= 3570 && f < 3600)
   {
     mode = "digi";
-    band = "80m";
+    band = "m80";
   }
   else if (f >= 3600 && f < 4000)
   {
     mode = "phone";
-    band = "80m";
+    band = "m80";
   }
   else if (f >= 7000 && f < 7040)
   {
     mode = "cw";
-    band = "40m";
+    band = "m40";
   }
   else if (f >= 7040 && f < 7050)
   {
     mode = "digi";
-    band = "40m";
+    band = "m40";
   }
   else if (f >= 7050 && f < 7300)
   {
     mode = "phone";
-    band = "40m";
+    band = "m40";
   }
   else if (f >= 10100 && f < 10130)
   {
@@ -530,82 +574,82 @@ BandMode SocketTest::Band(const QString& freq)
   else if (f >= 10130 && f < 10150)
   {
     mode = "digi";
-    band = "30m";
+    band = "m30";
   }  
   else if (f >= 14000 && f < 14070)
   {
     mode = "cw";
-    band = "20m";
+    band = "m20";
   }
   else if (f >= 14070 && f < 14095)
   {
     mode = "digi";
-    band = "20m";
+    band = "m20";
   }
   else if (f >= 14095 && f < 14350)
   {
     mode = "phone";
-    band = "20m";
+    band = "m20";
   }
   else if (f >= 18068 && f < 18100)
   {
     mode = "cw";
-    band = "17m";
+    band = "m17";
   }
   else if (f >= 18100 && f < 18105)
   {
     mode = "digi";
-    band = "17m";
+    band = "m17";
   }
   else if (f >= 18105 && f < 18168)
   {
     mode = "phone";
-    band = "17m";
+    band = "m17";
   }
   else if (f >= 21000 && f < 21070)
   {
     mode = "cw";
-    band = "15m";
+    band = "m15";
   }
   else if (f >= 21070 && f < 21100)
   {
     mode = "digi";
-    band = "15m";
+    band = "m15";
   }
   else if (f >= 21100 && f < 21450)
   {
     mode = "phone";
-    band = "15m";
+    band = "m15";
   }
   else if (f >= 24890 && f < 24920)
   {
     mode = "cw";
-    band = "12m";
+    band = "m12";
   }
   else if (f >= 24920 && f < 24930)
   {
     mode = "digi";
-    band = "12m";
+    band = "m12";
   }
   else if (f >= 24930 && f < 24990)
   {
     mode = "phone";
-    band = "12m";
+    band = "m12";
   }  
   else if (f >= 28000 && f < 28070)
   {
     mode = "cw";
-    band = "10m";
+    band = "m10";
   }
   else if (f >= 28070 && f < 28120)
   {
     mode = "digi";
-    band = "10m";
+    band = "m10";
   }
   else if (f >= 28120 && f < 28700)
   {
     mode = "phone";
-    band = "10m";
+    band = "m10";
   }
   return BandMode(band, mode);
 }
