@@ -34,7 +34,7 @@ void Model::readDxccTextFile()
            QString line = input.readLine();
            QString prefix = line.mid(0, 24).trimmed();
            QString entity = line.mid(24, 35).trimmed();
-           qDebug() << entity;
+           entity.replace("'", "''");
            int id = line.mid(77, 3).toInt();
            query.exec(QString("insert into entity (id, prefix, entity)"
                 "values(%1, '%2', '%3')").arg(id).arg(prefix.toStdString().c_str()).arg(entity.toStdString().c_str()));
