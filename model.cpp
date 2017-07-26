@@ -39,7 +39,7 @@ void Model::readDxccTextFile()
        {
            QString line = input.readLine();
            QString prefix = line.mid(0, 24).trimmed();
-           QString entity = line.mid(24, 35).trimmed();
+           QString entity = line.mid(24, 35).trimmed().toUpper();
            // sql doesn't like single ' character
            entity.replace("'", "''");
            int id = line.mid(77, 3).toInt();

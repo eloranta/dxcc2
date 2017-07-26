@@ -93,6 +93,23 @@ void SocketTest::readyRead()
     QString spotterCountry = Country(spotter);
 
     qDebug() << country << bandMode.band << call << bandMode.mode;
+
+    QSqlQuery query;
+    query.exec(QString("select id from entity where entity='%1'").arg(country));
+
+    if (!query.next())
+        return;
+
+    int id = query.value(0).toInt();
+
+    query.exec(QString("select mixed from dxcc where entity=%1").arg(id));
+    if (!query.next())
+        return;
+
+    if (query.value(0).toInt() == 0)
+    {
+        qDebug() << "NEW DXCC: "<< country << bandMode.band << call << bandMode.mode;
+    }
 }
 
 void SocketTest::findMaximumId()
