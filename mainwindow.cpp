@@ -31,6 +31,10 @@ MainWindow::MainWindow() :
     model.setHeaderData(model.fieldIndex("m6"), Qt::Horizontal, tr("6"));
     model.setHeaderData(model.fieldIndex("m2"), Qt::Horizontal, tr("2"));
 
+    ui->tableView->setColumnWidth(1, 100);
+    ui->tableView->setColumnWidth(2, 200);
+    for (int i = 3; i < 20; i++)
+        ui->tableView->setColumnWidth(i, 50);
 
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(fileOpen()));
 }

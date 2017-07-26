@@ -16,8 +16,8 @@ void Model::readDxccTextFile()
     QSqlQuery query;
     query.exec("create table if not exists entity ("
                "id int primary key,"
-               "prefix varchar(20),"
-               "entity varchar(20)"
+               "prefix varchar(40),"
+               "entity varchar(40)"
                ")");
 
     QFile inputFile("dxcc.txt");
@@ -34,6 +34,7 @@ void Model::readDxccTextFile()
            QString line = input.readLine();
            QString prefix = line.mid(0, 24).trimmed();
            QString entity = line.mid(24, 35).trimmed();
+           qDebug() << entity;
            int id = line.mid(77, 3).toInt();
            query.exec(QString("insert into entity (id, prefix, entity)"
                 "values(%1, '%2', '%3')").arg(id).arg(prefix.toStdString().c_str()).arg(entity.toStdString().c_str()));
@@ -48,8 +49,8 @@ void Model::initialize()
     QSqlQuery query;
     query.exec("create table if not exists dxcc ("
                "id int primary key,"
-               "prefix varchar(20),"
-               "entity varchar(20),"
+               "prefix varchar(40),"
+               "entity varchar(40),"
                "deleted integer,"
                "mixed integer,"
                "phone integer,"
@@ -89,7 +90,6 @@ void Model::initialize()
 void Model::fileOpen()
 {
     QString fileName = QFileDialog::getOpenFileName(0, tr("Open File"), "c:\\ZOWN\\dxcc", tr("Log File (*.adi)"));
-//    QString fileName = "c:\\ZOWN\\dxcc\\DXCC_QSLs_20170619_195452.adi"; // TODO:
     std::ifstream inFile;
     inFile.open(fileName.toStdString());
     if (!inFile)

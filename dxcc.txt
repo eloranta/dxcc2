@@ -216,7 +216,7 @@
     OY*                 Faroe Is.                          EU    18    14    222
     P2(24)              Papua New Guinea                   OC    51    28    163
     P4(25)*             Aruba                              SA    11    09    091
-    P5(26)              Democratic People's Rep. of Korea  AS    44    25    344
+    P5(26)              Democratic Peoples Rep. of Korea   AS    44    25    344
     PA-PI*              Netherlands                        EU    27    14    263
     PJ2(50)             Curacao                            SA    11    09    517
     PJ4(51)             Bonaire                            SA    11    09    520
@@ -260,7 +260,7 @@
     TN(31)              Republic of the Congo              AF    52    36    412
     TR(32)*             Gabon                              AF    52    36    420
     TT(33)              Chad                               AF    47    36    410
-    TU(34)              Cote d'Ivoire                      AF    46    35    428
+    TU(34)              Cote dIvoire                       AF    46    35    428
     TY(35)              Benin                              AF    46    35    416
     TZ(36)*             Mali                               AF    46    35    442
     UA-UI1-7,RA-RZ*     European Russia                    EU    (E)   16    054
