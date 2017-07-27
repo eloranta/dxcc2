@@ -24,8 +24,6 @@ class SocketTest : public QObject
 public:
     explicit SocketTest(QObject *parent = 0);
     void Test();
-    bool createDatabaseConnection();
-    void findMaximumId();
     QString Country(const QString& call);
     BandMode Band(const QString& freq);
 public slots:

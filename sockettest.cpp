@@ -26,31 +26,6 @@ void SocketTest::Test()
     //}
 }
 
-bool SocketTest::createDatabaseConnection()
-{
-//    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-//    db.setDatabaseName("spots.sqlite");
-//    if (!db.open())
-//    {
-//        std::cout << "Cannot open database.\n";
-//        return false;
-//    }
-
-//    QSqlQuery query;
-//    query.exec("create table if not exists spots "
-//               "(id int primary key, spotter varchar(12), spottercountry varchar(20), frequency varchar(12), call varchar(12), message varchar(30), time varchar(4), grid varchar(4), country varchar(20), band varchar(4), mode varchar(5))");
-
-
-//    QSqlQuery query1("select call from spots");
-//    while (query1.next())
-//    {
-//        QString call = query1.value(0).toString();
-//        qDebug() << call;
-//    }
-
-    return true;
-}
-
 void SocketTest::connected()
 {
     qDebug() << "Connected!";
@@ -146,24 +121,15 @@ void SocketTest::readyRead()
         }
     }
 
-    query.exec(QString("select '%1' from dxcc where entity=%2").arg(bandMode.band).arg(id));
+    QString s = QString("select %1 from dxcc where entity=%2").arg(bandMode.band).arg(id);
+    //qDebug() << s;
+    query.exec(s);
     if (!query.next())
         return;
     if (query.value(0).toInt() == 0)
     {
         qDebug() << "NEW BAND: "<< country << bandMode.band << call << bandMode.mode;
         return;
-    }
-}
-
-void SocketTest::findMaximumId()
-{
-    QSqlQuery query("select id from spots");
-    while (query.next())
-    {
-        int id = query.value(0).toInt();
-        if (id > this->id)
-            this->id = id;
     }
 }
 
@@ -650,6 +616,36 @@ BandMode SocketTest::Band(const QString& freq)
   {
     mode = "phone";
     band = "m10";
+  }
+  else if (f >= 50000 && f < 50150)  // TODO:
+  {
+    mode = "cw";
+    band = "m6";
+  }
+  else if (f >= 50150 && f < 50300)  // TODO:
+  {
+    mode = "digi";
+    band = "m6";
+  }
+  else if (f >= 50300 && f < 51000)  // TODO:
+  {
+    mode = "phone";
+    band = "m6";
+  }
+  else if (f >= 144000 && f < 144150)  // TODO:
+  {
+    mode = "cw";
+    band = "m2";
+  }
+  else if (f >= 144150 && f < 144300)  // TODO:
+  {
+    mode = "digi";
+    band = "m2";
+  }
+  else if (f >= 144300 && f < 145000)  // TODO:
+  {
+    mode = "phone";
+    band = "m2";
   }
   return BandMode(band, mode);
 }
