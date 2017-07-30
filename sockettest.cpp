@@ -43,7 +43,7 @@ void SocketTest::bytesWritten(qint64 bytes)
 
 void SocketTest::readyRead()
 {
-    QByteArray& data =  socket->readAll();
+    const QByteArray& data = socket->readAll();
     if (state == 0)
     {
         socket->write("OG2Z\n");
@@ -83,7 +83,7 @@ void SocketTest::readyRead()
 
     if (query.value(0).toInt() == 0)
     {
-        qDebug() << "NEW DXCC: "<< country << bandMode.band << call << bandMode.mode;
+        qDebug() << "NEW DXCC: "<< country << freq << call << bandMode.mode;
         return;
     }
 
@@ -94,7 +94,7 @@ void SocketTest::readyRead()
             return;
         if (query.value(0).toInt() == 0)
         {
-            qDebug() << "NEW MODE: "<< country << bandMode.band << call << bandMode.mode;
+            qDebug() << "NEW MODE: "<< country << freq << call << bandMode.mode;
             return;
         }
     }
@@ -105,7 +105,7 @@ void SocketTest::readyRead()
             return;
         if (query.value(0).toInt() == 0)
         {
-            qDebug() << "NEW MODE: "<< country << bandMode.band << call << bandMode.mode;
+            qDebug() << "NEW MODE: "<< country << freq << call << bandMode.mode;
             return;
         }
     }
@@ -116,7 +116,7 @@ void SocketTest::readyRead()
             return;
         if (query.value(0).toInt() == 0)
         {
-            qDebug() << "NEW MODE: "<< country << bandMode.band << call << bandMode.mode;
+            qDebug() << "NEW MODE: "<< country << freq << call << bandMode.mode;
             return;
         }
     }
@@ -128,7 +128,7 @@ void SocketTest::readyRead()
         return;
     if (query.value(0).toInt() == 0)
     {
-        qDebug() << "NEW BAND: "<< country << bandMode.band << call << bandMode.mode;
+        qDebug() << "NEW BAND: "<< country << freq << call << bandMode.mode;
         return;
     }
 }
@@ -617,19 +617,19 @@ BandMode SocketTest::Band(const QString& freq)
     mode = "phone";
     band = "m10";
   }
-  else if (f >= 50000 && f < 50150)  // TODO:
+  else if (f >= 50000 && f < 50100)
   {
     mode = "cw";
     band = "m6";
   }
-  else if (f >= 50150 && f < 50300)  // TODO:
-  {
-    mode = "digi";
-    band = "m6";
-  }
-  else if (f >= 50300 && f < 51000)  // TODO:
+  else if (f >= 50100 && f < 50300)
   {
     mode = "phone";
+    band = "m6";
+  }
+  else if (f >= 50300 && f < 51000)
+  {
+    mode = "digi";
     band = "m6";
   }
   else if (f >= 144000 && f < 144150)  // TODO:
@@ -639,12 +639,12 @@ BandMode SocketTest::Band(const QString& freq)
   }
   else if (f >= 144150 && f < 144300)  // TODO:
   {
-    mode = "digi";
+    mode = "phone";
     band = "m2";
   }
   else if (f >= 144300 && f < 145000)  // TODO:
   {
-    mode = "phone";
+    mode = "digi";
     band = "m2";
   }
   return BandMode(band, mode);
