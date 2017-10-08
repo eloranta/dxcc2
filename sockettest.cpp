@@ -83,7 +83,7 @@ void SocketTest::readyRead()
 
     if (query.value(0).toInt() == 0)
     {
-        qDebug() << "NEW DXCC: "<< country << freq << call << bandMode.mode;
+        qDebug() << time << "NEW DXCC:"<< country << freq << call << bandMode.mode;
         return;
     }
 
@@ -94,7 +94,7 @@ void SocketTest::readyRead()
             return;
         if (query.value(0).toInt() == 0)
         {
-            qDebug() << "NEW MODE: "<< country << freq << call << bandMode.mode;
+            qDebug() << time << "NEW MODE:"<< country << freq << call << bandMode.mode;
             return;
         }
     }
@@ -105,7 +105,7 @@ void SocketTest::readyRead()
             return;
         if (query.value(0).toInt() == 0)
         {
-            qDebug() << "NEW MODE: "<< country << freq << call << bandMode.mode;
+            qDebug() << time << "NEW MODE:"<< country << freq << call << bandMode.mode;
             return;
         }
     }
@@ -116,7 +116,7 @@ void SocketTest::readyRead()
             return;
         if (query.value(0).toInt() == 0)
         {
-            qDebug() << "NEW MODE: "<< country << freq << call << bandMode.mode;
+            qDebug() << time << "NEW MODE: "<< country << freq << call << bandMode.mode;
             return;
         }
     }
@@ -128,7 +128,7 @@ void SocketTest::readyRead()
         return;
     if (query.value(0).toInt() == 0)
     {
-        qDebug() << "NEW BAND: "<< country << freq << call << bandMode.mode;
+        qDebug() << time << "NEW BAND: "<< country << freq << call << bandMode.mode;
         return;
     }
 }
